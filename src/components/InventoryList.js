@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import ExpenseListItem from "./InventoryListItem";
-// import getVisibleInventory from '../selectors/inventory';
+import getVisibleInventory from '../selectors/inventory';
 
 export const InventoryList = props => (
   <div>
@@ -16,7 +16,8 @@ export const InventoryList = props => (
 // todo make sure to only return the filtered inventory items
 const mapStateToProps = state => {
   return {
-    inventoryItems: state.inventoryItems
+    // inventoryItems: state.inventoryItems
+    inventoryItems: getVisibleInventory(state.inventoryItems, state.filters)
   };
 };
 

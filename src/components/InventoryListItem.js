@@ -18,11 +18,13 @@ const ExpenseListItem = ({
     <p>Description: {description}</p>
     <p>Cost: {cost}</p>
     <p>Quantity: {quantity}</p>
+    
     {sizes.small > 0 && <p>Small: {sizes.small}</p>}
     {sizes.medium > 0 && <p>Medium: {sizes.medium}</p>}
     {sizes.large > 0 && <p>Large: {sizes.large}</p>}
     {sizes.extraLarge > 0 && <p>XL: {sizes.extraLarge}</p>}
   </div>
+
 );
 
 export default ExpenseListItem;

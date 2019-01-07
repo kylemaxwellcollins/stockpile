@@ -4,6 +4,7 @@ import AppRouter from "./routers/AppRouter";
 import "./App.css";
 import configureStore from "./store/configureStore";
 import { addInventory } from "./actions/inventory";
+import { setTextFilter} from './actions/filters'
 
 const store = configureStore();
 
@@ -18,13 +19,13 @@ store.dispatch(
       large: 30,
       extraLarge: 10
     },
-    quantity: 100
+    quantity: 100,
   })
 );
 store.dispatch(
   addInventory({
     product: "Hat",
-    description: "Red dad hat",
+    description: "Red dad",
     cost: 2000,
     sizes: {
       small: 0,
@@ -35,6 +36,8 @@ store.dispatch(
     quantity: 30
   })
 );
+
+store.dispatch(setTextFilter(''))
 
 const state = store.getState();
 
