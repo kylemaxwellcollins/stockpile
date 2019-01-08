@@ -3,7 +3,6 @@ import { removeInventory } from "../actions/inventory";
 import { connect } from "react-redux";
 
 const EditInventoryPage = props => {
-  console.log(props.match.params.id);
   return (
     <div>
       EditInventoryPage

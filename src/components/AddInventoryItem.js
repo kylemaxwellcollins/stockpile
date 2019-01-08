@@ -1,11 +1,14 @@
 import React from 'react'
+import InventoryItemForm from './InventoryItemForm'; 
+import { connect } from 'react-redux'
 
-const AddInventoryItem = () => {
+const AddInventoryItem = (props) => {
   return (
     <div>
-        AddInventoryItem
+        <h2>Add Inventory</h2>
+        <InventoryItemForm />
     </div>
   )
 }
 
-export default AddInventoryItem
+export default connect()(AddInventoryItem)
