@@ -6,7 +6,7 @@ const inventoryReducer = (state = inventoryReducerDefaultState, action) => {
       return [...state, action.inventoryItem];
     case "REMOVE_INVENTORY":
       return state.filter(({ id }) => id !== action.id);
-    case "EDIT_EXPENSE":
+    case "EDIT_INVENTORY":
       return state.map(inventoryItem => {
         if (inventoryItem.id === action.id) {
           return { ...inventoryItem, ...action.updates };
