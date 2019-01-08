@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import moment from "moment";
 
 export default class InventoryItemForm extends Component {
   constructor(props) {
     super(props);
+
+    // todo refactor for editInventory
     this.state = {
       sizesToggle: false,
       product: "",
@@ -16,6 +19,7 @@ export default class InventoryItemForm extends Component {
         extraLarge: ""
       },
       image: "",
+      createdAt: moment(),
       error: ""
     };
   }
@@ -39,7 +43,7 @@ export default class InventoryItemForm extends Component {
     const quantity = e.target.value;
     if (!quantity || quantity.match(/^\d{1,}?$/))
       this.setState({
-        [e.target.id]: parseInt(e.target.value)
+        [e.target.id]: quantity
       });
   };
 
@@ -51,6 +55,7 @@ export default class InventoryItemForm extends Component {
 
   onSizeChange = e => {
     const quantity = e.target.value;
+    // !shows NaN when input is blank -- fix
     if (!this.state.sizes[quantity]) {
       this.setState({
         sizes: {
@@ -63,7 +68,7 @@ export default class InventoryItemForm extends Component {
       this.setState({
         sizes: {
           ...this.state.sizes,
-          [e.target.id]: parseInt(e.target.value)
+          [e.target.id]: quantity
         }
       });
   };
@@ -74,22 +79,34 @@ export default class InventoryItemForm extends Component {
       this.setState({
         error: "Please provide the product name, cost and quantity"
       });
-      } else if (
-        this.state.sizesToggle &&
-        this.state.quantity !==
-          (this.state.sizes.small +
-            this.state.sizes.medium +
-            this.state.sizes.large +
-            this.state.sizes.extraLarge)
-      ) {
-        this.setState({
-          error: "Make sure your sizes match your quantity"
-        });
-    } else {
+    } else if (
+      this.state.sizesToggle &&
+      parseInt(this.state.quantity) !==
+        parseInt(this.state.sizes.small) +
+          parseInt(this.state.sizes.medium) +
+          parseInt(this.state.sizes.large) +
+          parseInt(this.state.sizes.extraLarge)
+    ) {
       this.setState({
-        error: ''
-      })
-      console.log(this.state.quantity);
+        error:
+          "Make sure the quantities for each size add up to the total quantity"
+      });
+    } else {
+      this.setState({ error: "" });
+      this.props.onSubmit({
+        product: this.state.product,
+        cost: parseFloat(this.state.cost, 10) * 100,
+        description: this.state.description,
+        quantity: this.state.quantity,
+        sizes: {
+          small: this.state.sizes.small,
+          medium: this.state.sizes.medium,
+          large: this.state.sizes.large,
+          extraLarge: this.state.sizes.extraLarge
+        },
+        image: this.state.image,
+        createdAt: this.state.createdAt.valueOf()
+      });
     }
   };
   render() {
