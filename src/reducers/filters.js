@@ -24,8 +24,11 @@ const filterReducer = (state = filterReducerDefaultState, action) => {
         ...state,
         sortBy: "cost"
       };
-
-      // todo SORT_BY_QUANTITY
+    case "SORT_BY_QUANTITY":
+      return {
+        ...state,
+        sortBy: "quantity"
+      }
 
     // case "SET_START_DATE":
     //   return {

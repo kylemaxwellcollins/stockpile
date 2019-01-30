@@ -1,11 +1,18 @@
 import React from "react";
-import { removeInventory } from "../actions/inventory";
+import { removeInventory, editInventory } from "../actions/inventory";
 import { connect } from "react-redux";
+import InventoryItemForm from "../components/InventoryItemForm";
 
 const EditInventoryPage = props => {
   return (
     <div>
-      EditInventoryPage
+      <InventoryItemForm
+        inventoryItem={props.inventoryItem}
+        onSubmit={inventoryItem => {
+          props.dispatch(editInventory(props.inventoryItem.id, inventoryItem));
+          props.history.push("/inventory");
+        }}
+      />
       <button
         onClick={() => {
           props.dispatch(removeInventory({ id: props.match.params.id }));
@@ -20,8 +27,7 @@ const EditInventoryPage = props => {
 
 const mapStateToProps = (state, props) => {
   return {
-    // inventoryItems: state.inventoryItems
-    inventoryItems: state.inventoryItems.find(
+    inventoryItem: state.inventoryItems.find(
       inventoryItem => inventoryItem.id === props.match.params.id
     )
   };

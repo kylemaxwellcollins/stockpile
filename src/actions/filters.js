@@ -14,7 +14,10 @@ export const sortByCost = () => ({
   type: "SORT_BY_COST"
 });
 
-// todo SORT_BY_QUANTITY
+// SORT_BY_QUANTITY
+export const sortByQuantity = () => ({
+  type: "SORT_BY_QUANTITY"
+})
 
 // // SET_START_DATE
 // export const setStartDate = startDate => ({

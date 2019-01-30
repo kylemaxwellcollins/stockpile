@@ -4,22 +4,34 @@ import moment from "moment";
 export default class InventoryItemForm extends Component {
   constructor(props) {
     super(props);
-
-    // todo refactor for editInventory
     this.state = {
-      sizesToggle: false,
-      product: "",
-      cost: "",
-      description: "",
-      quantity: "",
+      sizesToggle:
+        (props.inventoryItem &&
+          (props.inventoryItem.sizes.small ||
+            props.inventoryItem.sizes.medium ||
+            props.inventoryItem.sizes.large ||
+            props.inventoryItem.sizes.extraLarge)) > 0
+          ? true
+          : false,
+      product: props.inventoryItem ? props.inventoryItem.product : "",
+      cost: props.inventoryItem
+        ? (props.inventoryItem.cost / 100).toFixed(2)
+        : "",
+      description: props.inventoryItem ? props.inventoryItem.description : "",
+      quantity: props.inventoryItem ? props.inventoryItem.quantity : "",
       sizes: {
-        small: "",
-        medium: "",
-        large: "",
-        extraLarge: ""
+        small: props.inventoryItem ? props.inventoryItem.sizes.small : "",
+        medium: props.inventoryItem ? props.inventoryItem.sizes.medium : "",
+        large: props.inventoryItem ? props.inventoryItem.sizes.large : "",
+        extraLarge: props.inventoryItem
+          ? props.inventoryItem.sizes.extraLarge
+          : ""
       },
-      image: "",
-      createdAt: moment(),
+      image: null,
+      imageURL: "",
+      createdAt: props.inventoryItem
+        ? moment(props.inventoryItem.createdAt)
+        : moment(),
       error: ""
     };
   }
@@ -75,21 +87,20 @@ export default class InventoryItemForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    if (!this.state.product || !this.state.cost || !this.state.quantity) {
-      this.setState({
-        error: "Please provide the product name, cost and quantity"
+    // ! fix sizesTotal when only using quantity
+    const totalSizes = Object.values(this.state.sizes)
+      .filter(Number)
+      .reduce((a, b) => {
+        return parseInt(a) + parseInt(b);
       });
-    } else if (
-      this.state.sizesToggle &&
-      parseInt(this.state.quantity) !==
-        parseInt(this.state.sizes.small) +
-          parseInt(this.state.sizes.medium) +
-          parseInt(this.state.sizes.large) +
-          parseInt(this.state.sizes.extraLarge)
+    console.log(totalSizes);
+    if (
+      !this.state.product ||
+      !this.state.cost ||
+      (this.state.sizesToggle ? false : !this.state.quantity)
     ) {
       this.setState({
-        error:
-          "Make sure the quantities for each size add up to the total quantity"
+        error: "Please provide the product name, cost and quantity"
       });
     } else {
       this.setState({ error: "" });
@@ -97,7 +108,8 @@ export default class InventoryItemForm extends Component {
         product: this.state.product,
         cost: parseFloat(this.state.cost, 10) * 100,
         description: this.state.description,
-        quantity: this.state.quantity,
+        // ! ^^
+        quantity: this.state.sizesToggle ? totalSizes : this.state.quantity,
         sizes: {
           small: this.state.sizes.small,
           medium: this.state.sizes.medium,
@@ -109,6 +121,13 @@ export default class InventoryItemForm extends Component {
       });
     }
   };
+
+  onFileChange = e => {
+    const image = e.target.files[0];
+    if (image) {
+      this.setState({ image });
+    }
+  };
   render() {
     const {
       onSubmit,
@@ -117,6 +136,7 @@ export default class InventoryItemForm extends Component {
       onQuantityChange,
       onChecked,
       onSizeChange,
+      onFileChange,
       state
     } = this;
     return (
@@ -137,14 +157,16 @@ export default class InventoryItemForm extends Component {
             value={state.cost}
             onChange={onCostChange}
           />
-          <input
-            type="text"
-            placeholder="Quantity"
-            id="quantity"
-            value={state.quantity}
-            onChange={onQuantityChange}
-          />
-          <label htmlFor="sizeToggle">Show sizes</label>
+          {state.sizesToggle || (
+            <input
+              type="text"
+              placeholder="Quantity"
+              id="quantity"
+              value={state.quantity}
+              onChange={onQuantityChange}
+            />
+          )}
+          <label htmlFor="sizeToggle">Add sizes</label>
           <input
             type="checkbox"
             name="sizeToggle"
@@ -185,12 +207,12 @@ export default class InventoryItemForm extends Component {
               />
             </div>
           )}
+          <label htmlFor="image">Upload image</label>
           <input
-            type="text"
-            placeholder="Image"
+            type="file"
             id="image"
-            value={state.image}
-            onChange={onTextChange}
+            onChange={onFileChange}
+            accept="image/*"
           />
           <textarea
             placeholder="Description"
@@ -198,7 +220,7 @@ export default class InventoryItemForm extends Component {
             value={state.description}
             onChange={onTextChange}
           />
-          <button>Add</button>
+          <button>{this.props.inventoryItem ? "Make Changes" : "Add"}</button>
         </form>
       </div>
     );

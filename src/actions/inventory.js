@@ -6,13 +6,14 @@ export const addInventory = ({
   product = "",
   cost = 0,
   createdAt = 0,
-  image = "",
+  image = null,
+  imageURL = "",
   quantity = 0,
   sizes = {
-    small: 0,
-    medium: 0,
-    large: 0,
-    extraLarge: 0
+    small: "",
+    medium: "",
+    large: "",
+    extraLarge: ""
   }
 } = {}) => ({
   type: "ADD_INVENTORY",
@@ -23,8 +24,10 @@ export const addInventory = ({
     cost,
     createdAt,
     image,
+    imageURL,
     quantity,
     sizes
+
   }
 });
 

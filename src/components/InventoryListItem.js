@@ -1,22 +1,23 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ExpenseListItem = ({
+const InventoryListItem = ({
   product,
   description,
   cost,
   createdAt,
   id,
   quantity,
-  sizes
+  sizes,
+  imageURL
 }) => (
   <div>
     <Link to={`/edit/${id}`}>
       <h3>{product}</h3>
     </Link>
-
+    <img src={imageURL} alt={description}/>
     <p>Description: {description}</p>
-    <p>Cost: {cost}</p>
+    <p>Cost: ${(cost / 100).toFixed(2)}</p>
     <p>Quantity: {quantity}</p>
     
     {sizes.small > 0 && <p>Small: {sizes.small}</p>}
@@ -27,4 +28,4 @@ const ExpenseListItem = ({
 
 );
 
-export default ExpenseListItem;
+export default InventoryListItem;

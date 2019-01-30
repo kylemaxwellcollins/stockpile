@@ -13,12 +13,12 @@ const Header = () => (
     <NavLink to="/create" activeClassName="is-active">
       Create Item
     </NavLink>
-    <NavLink to="/report" activeClassName="is-active">
+    {/* <NavLink to="/report" activeClassName="is-active">
       Report
     </NavLink>
     <NavLink to="/records" activeClassName="is-active">
       Records
-    </NavLink>
+    </NavLink> */}
 
   </header>
 );
