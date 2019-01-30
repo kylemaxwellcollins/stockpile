@@ -5,7 +5,6 @@ const InventoryListItem = ({
   product,
   description,
   cost,
-  createdAt,
   id,
   quantity,
   sizes,

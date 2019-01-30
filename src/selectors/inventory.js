@@ -1,17 +1,10 @@
 // Get visible inventory items
 const getVisibleInventory = (
   inventory,
-  { text, sortBy, startDate, endDate }
+  { text, sortBy }
 ) => {
   return inventory
     .filter(inventoryItem => {
-      // const createdAtMoment = moment(expense.createdAt);
-      // const startDateMatch = startDate
-      //   ? startDate.isSameOrBefore(createdAtMoment, "day")
-      //   : true;
-      // const endDateMatch = endDate
-      //   ? endDate.isSameOrAfter(createdAtMoment, "day")
-      //   : true;
       const textMatch = inventoryItem.description
         .toLowerCase()
         .includes(text.toLowerCase());
@@ -20,7 +13,6 @@ const getVisibleInventory = (
         .toLowerCase()
         .includes(text.toLowerCase());
 
-      // return startDateMatch && endDateMatch && textMatch;
       return textMatch || productMatch;
     })
     .sort((a, b) => {

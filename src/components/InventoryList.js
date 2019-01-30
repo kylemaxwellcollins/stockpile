@@ -11,10 +11,8 @@ export const InventoryList = props => (
   </div>
 );
 
-// todo make sure to only return the filtered inventory items
 const mapStateToProps = state => {
   return {
-    // inventoryItems: state.inventoryItems
     inventoryItems: getVisibleInventory(state.inventoryItems, state.filters)
   };
 };

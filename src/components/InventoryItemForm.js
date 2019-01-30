@@ -87,13 +87,18 @@ export default class InventoryItemForm extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    // ! fix sizesTotal when only using quantity
-    const totalSizes = Object.values(this.state.sizes)
-      .filter(Number)
-      .reduce((a, b) => {
-        return parseInt(a) + parseInt(b);
-      });
-    console.log(totalSizes);
+    const getTotalSizes = () => {
+      if (this.state.sizesToggle) {
+        const totalSizes = Object.values(this.state.sizes)
+          .filter(Number)
+          .reduce((a, b) => {
+            return parseInt(a) + parseInt(b);
+          });
+        return totalSizes;
+      } else {
+        return Number(this.state.quantity);
+      }
+    };
     if (
       !this.state.product ||
       !this.state.cost ||
@@ -108,8 +113,7 @@ export default class InventoryItemForm extends Component {
         product: this.state.product,
         cost: parseFloat(this.state.cost, 10) * 100,
         description: this.state.description,
-        // ! ^^
-        quantity: this.state.sizesToggle ? totalSizes : this.state.quantity,
+        quantity: getTotalSizes(),
         sizes: {
           small: this.state.sizes.small,
           medium: this.state.sizes.medium,
