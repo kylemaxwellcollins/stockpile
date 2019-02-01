@@ -1,6 +1,9 @@
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import inventoryReducer from "../reducers/inventory";
 import filterReducer from "../reducers/filters";
+import ReduxThunk from "redux-thunk";
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default () => {
   // Store creation
@@ -9,8 +12,9 @@ export default () => {
       inventoryItems: inventoryReducer,
       filters: filterReducer
     }),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+
+    composeEnhancers(applyMiddleware(ReduxThunk))
   );
+
   return store;
 };
-

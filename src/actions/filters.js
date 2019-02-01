@@ -10,8 +10,8 @@ export const sortByDate = () => ({
 });
 
 // SORT_BY_AMOUNT
-export const sortByCost = () => ({
-  type: "SORT_BY_COST"
+export const sortByPrice = () => ({
+  type: "SORT_BY_PRICE"
 });
 
 // SORT_BY_QUANTITY

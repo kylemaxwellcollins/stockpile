@@ -2,9 +2,6 @@
 const filterReducerDefaultState = {
   text: "",
   sortBy: "date",
-  // default to showing only expenses of the current month
-  // startDate: moment().startOf("month"),
-  // endDate: moment().endOf("month")
 };
 
 const filterReducer = (state = filterReducerDefaultState, action) => {
@@ -19,28 +16,16 @@ const filterReducer = (state = filterReducerDefaultState, action) => {
         ...state,
         sortBy: "date"
       };
-    case "SORT_BY_COST":
+    case "SORT_BY_PRICE":
       return {
         ...state,
-        sortBy: "cost"
+        sortBy: "price"
       };
     case "SORT_BY_QUANTITY":
       return {
         ...state,
         sortBy: "quantity"
       }
-
-    // case "SET_START_DATE":
-    //   return {
-    //     ...state,
-    //     startDate: action.startDate
-    //   };
-    // case "SET_END_DATE":
-    //   return {
-    //     ...state,
-    //     endDate: action.endDate
-    //   };
-
     default:
       return state;
   }

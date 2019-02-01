@@ -9,17 +9,17 @@ const getVisibleInventory = (
         .toLowerCase()
         .includes(text.toLowerCase());
 
-      const productMatch = inventoryItem.product
+      const titleMatch = inventoryItem.title
         .toLowerCase()
         .includes(text.toLowerCase());
 
-      return textMatch || productMatch;
+      return textMatch || titleMatch;
     })
     .sort((a, b) => {
       if (sortBy === "date") {
         return a.createdAt < b.createdAt ? 1 : -1;
-      } else if (sortBy === "cost") {
-        return a.cost < b.cost ? 1 : -1;
+      } else if (sortBy === "price") {
+        return a.price < b.price ? 1 : -1;
       } else if (sortBy === "quantity") {
         return a.quantity < b.quantity ? 1 : - 1
       } else {

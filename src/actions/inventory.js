@@ -3,8 +3,8 @@ import uuid from "uuid";
 // ADD_INVENTORY
 export const addInventory = ({
   description = "",
-  product = "",
-  cost = 0,
+  title = "",
+  price = 0,
   createdAt = 0,
   image = null,
   imageURL = "",
@@ -20,8 +20,8 @@ export const addInventory = ({
   inventoryItem: {
     id: uuid(),
     description,
-    product,
-    cost,
+    title,
+    price,
     createdAt,
     image,
     imageURL,

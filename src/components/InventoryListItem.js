@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const InventoryListItem = ({
-  product,
+  title,
   description,
-  cost,
+  price,
   id,
   quantity,
   sizes,
@@ -12,11 +12,11 @@ const InventoryListItem = ({
 }) => (
   <div>
     <Link to={`/edit/${id}`}>
-      <h3>{product}</h3>
+      <h3>{title}</h3>
     </Link>
     <img src={imageURL} alt={description}/>
     <p>Description: {description}</p>
-    <p>Cost: ${(cost / 100).toFixed(2)}</p>
+    <p>Price: ${(price / 100).toFixed(2)}</p>
     <p>Quantity: {quantity}</p>
     
     {sizes.small > 0 && <p>Small: {sizes.small}</p>}

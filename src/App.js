@@ -4,53 +4,39 @@ import AppRouter from "./routers/AppRouter";
 import "./App.css";
 import configureStore from "./store/configureStore";
 import { addInventory } from "./actions/inventory";
-import { setTextFilter } from './actions/filters'
+import { setTextFilter } from "./actions/filters";
+import "./firebase/firebase";
 
-const store = configureStore(); 
+const store = configureStore();
 store.dispatch(
   addInventory({
-    product: "T-shirt",
+    title: "T-shirt",
     description: "black geometry shirt",
-    cost: 2000,
-    imageURL: "https://www.nhsfunfactory.com/mm5/graphics/00000001/IN_THR_Oath_SS_Black_front_256x256.jpg",
+    price: 2000,
+    imageURL:
+      "https://www.nhsfunfactory.com/mm5/graphics/00000001/IN_THR_Oath_SS_Black_front_256x256.jpg",
     sizes: {
       small: 30,
       medium: 30,
       large: 30,
       extraLarge: 10
     },
-    quantity: 100,
+    quantity: 100
   })
 );
+
 store.dispatch(
   addInventory({
-    product: "Sweater",
-    description: "Grey sweater with logo",
-    cost: 4000,
-    imageURL: "",
-    sizes: {
-      small: 10,
-      medium: 10,
-      large: 10,
-      extraLarge: 5
-    },
-    quantity: 35
-  })
-);
-store.dispatch(
-  addInventory({
-    product: "Hat",
+    title: "Hat",
     description: "Red dad",
-    cost: 2000,
-    imageURL: "http://icons.iconarchive.com/icons/rob-sanders/hat/256/Hat-baseball-red-icon.png",
+    price: 2000,
+    imageURL:
+      "http://icons.iconarchive.com/icons/rob-sanders/hat/256/Hat-baseball-red-icon.png",
     quantity: 30
   })
 );
 
-
-
-
-store.dispatch(setTextFilter(''))
+store.dispatch(setTextFilter(""));
 
 const state = store.getState();
 

@@ -1,15 +1,15 @@
 import React from "react";
 
 const StoreListItem = ({
-  product,
+  title,
   description,
-  cost,
+  price,
   quantity,
   sizes,
   imageURL
 }) => (
   <div>
-    <h3>{product}</h3>
+    <h3>{title}</h3>
     <img src={imageURL} alt={description} />
     <p>{description}</p>
     {(sizes.small || sizes.medium || sizes.large || sizes.extraLarge) > 0 || (
@@ -25,7 +25,7 @@ const StoreListItem = ({
       </select>
     )}
 
-    <p>Cost: {cost}</p>
+      <p>Price: ${(price / 100).toFixed(2)}</p>
     <button>Add to cart</button>
   </div>
 );

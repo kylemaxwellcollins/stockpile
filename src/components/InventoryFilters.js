@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {
   sortByDate,
   sortByQuantity,
-  sortByCost,
+  sortByPrice,
   setTextFilter
 } from "../actions/filters";
 
@@ -22,12 +22,12 @@ const InventoryFilters = props => {
           value={props.filters.sortBy}
           onChange={e => {
             e.target.value === "date" && props.dispatch(sortByDate());
-            e.target.value === "cost" && props.dispatch(sortByCost());
+            e.target.value === "price" && props.dispatch(sortByPrice());
             e.target.value === "quantity" && props.dispatch(sortByQuantity());
           }}
         >
           <option value="date">Date</option>
-          <option value="cost">Cost</option>
+          <option value="price">Price</option>
           <option value="quantity">Quantity</option>
         </select>
 

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import moment from "moment";
 
 export default class InventoryItemForm extends Component {
@@ -13,9 +13,9 @@ export default class InventoryItemForm extends Component {
             props.inventoryItem.sizes.extraLarge)) > 0
           ? true
           : false,
-      product: props.inventoryItem ? props.inventoryItem.product : "",
-      cost: props.inventoryItem
-        ? (props.inventoryItem.cost / 100).toFixed(2)
+      title: props.inventoryItem ? props.inventoryItem.title : "",
+      price: props.inventoryItem
+        ? (props.inventoryItem.price / 100).toFixed(2)
         : "",
       description: props.inventoryItem ? props.inventoryItem.description : "",
       quantity: props.inventoryItem ? props.inventoryItem.quantity : "",
@@ -42,11 +42,11 @@ export default class InventoryItemForm extends Component {
     });
   };
 
-  onCostChange = e => {
-    const cost = e.target.value;
-    if (!cost || cost.match(/^\d{1,}(\.\d{0,2})?$/)) {
+  onPriceChange = e => {
+    const price = e.target.value;
+    if (!price || price.match(/^\d{1,}(\.\d{0,2})?$/)) {
       this.setState({
-        cost
+        price
       });
     }
   };
@@ -67,7 +67,6 @@ export default class InventoryItemForm extends Component {
 
   onSizeChange = e => {
     const quantity = e.target.value;
-    // !shows NaN when input is blank -- fix
     if (!this.state.sizes[quantity]) {
       this.setState({
         sizes: {
@@ -100,18 +99,18 @@ export default class InventoryItemForm extends Component {
       }
     };
     if (
-      !this.state.product ||
-      !this.state.cost ||
+      !this.state.title ||
+      !this.state.price ||
       (this.state.sizesToggle ? false : !this.state.quantity)
     ) {
       this.setState({
-        error: "Please provide the product name, cost and quantity"
+        error: "Please provide the title, price and quantity"
       });
     } else {
       this.setState({ error: "" });
       this.props.onSubmit({
-        product: this.state.product,
-        cost: parseFloat(this.state.cost, 10) * 100,
+        title: this.state.title,
+        price: parseFloat(this.state.price, 10) * 100,
         description: this.state.description,
         quantity: getTotalSizes(),
         sizes: {
@@ -136,7 +135,7 @@ export default class InventoryItemForm extends Component {
     const {
       onSubmit,
       onTextChange,
-      onCostChange,
+      onPriceChange,
       onQuantityChange,
       onChecked,
       onSizeChange,
@@ -147,29 +146,22 @@ export default class InventoryItemForm extends Component {
       <div>
         {state.error && <p>{state.error}</p>}
         <form action="" onSubmit={onSubmit}>
+          <label htmlFor="title">Title:</label>
           <input
             type="text"
-            placeholder="Product"
-            id="product"
-            value={state.product}
+            placeholder="Title"
+            id="title"
+            value={state.title}
             onChange={onTextChange}
           />
+          <label htmlFor="price">Price:</label>
           <input
             type="text"
-            placeholder="Cost"
-            id="cost"
-            value={state.cost}
-            onChange={onCostChange}
+            placeholder="Price"
+            id="price"
+            value={state.price}
+            onChange={onPriceChange}
           />
-          {state.sizesToggle || (
-            <input
-              type="text"
-              placeholder="Quantity"
-              id="quantity"
-              value={state.quantity}
-              onChange={onQuantityChange}
-            />
-          )}
           <label htmlFor="sizeToggle">Add sizes</label>
           <input
             type="checkbox"
@@ -178,9 +170,22 @@ export default class InventoryItemForm extends Component {
             onChange={onChecked}
             checked={this.state.sizesToggle}
           />
+          {state.sizesToggle || (
+            <Fragment>
+              <label htmlFor="quantity">Quantity:</label>
+              <input
+                type="text"
+                placeholder="Quantity"
+                id="quantity"
+                value={state.quantity}
+                onChange={onQuantityChange}
+              />
+            </Fragment>
+          )}
 
           {state.sizesToggle && (
             <div>
+              <label htmlFor="small">S:</label>
               <input
                 type="text"
                 placeholder="Small"
@@ -188,6 +193,7 @@ export default class InventoryItemForm extends Component {
                 value={state.sizes.small}
                 onChange={onSizeChange}
               />
+              <label htmlFor="medium">M:</label>
               <input
                 type="text"
                 placeholder="Medium"
@@ -195,6 +201,7 @@ export default class InventoryItemForm extends Component {
                 value={state.sizes.medium}
                 onChange={onSizeChange}
               />
+              <label htmlFor="large">L:</label>
               <input
                 type="text"
                 placeholder="Large"
@@ -202,6 +209,7 @@ export default class InventoryItemForm extends Component {
                 value={state.sizes.large}
                 onChange={onSizeChange}
               />
+              <label htmlFor="extraLarge">XL:</label>
               <input
                 type="text"
                 placeholder="Extra Large"
@@ -211,18 +219,19 @@ export default class InventoryItemForm extends Component {
               />
             </div>
           )}
+          <label htmlFor="description">Description:</label>
+          <textarea
+            placeholder="Description"
+            id="description"
+            value={state.description}
+            onChange={onTextChange}
+          />
           <label htmlFor="image">Upload image</label>
           <input
             type="file"
             id="image"
             onChange={onFileChange}
             accept="image/*"
-          />
-          <textarea
-            placeholder="Description"
-            id="description"
-            value={state.description}
-            onChange={onTextChange}
           />
           <button>{this.props.inventoryItem ? "Make Changes" : "Add"}</button>
         </form>
