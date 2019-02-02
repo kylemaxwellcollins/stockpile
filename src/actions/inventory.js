@@ -36,27 +36,42 @@ export const startAddInventory = (inventoryData = {}) => {
       sizes
     };
 
-    const storageRef = storage.ref();
-    storageRef
-      .child("images/" + image.name)
-      .put(image)
-      .then(snapshot => {
-        snapshot.ref.getDownloadURL().then(downloadURL => {
-          database
-            .ref("inventory")
-            .push({ ...inventoryItem, imageURL: downloadURL})
-            .then(ref => {
-              dispatch(
-                addInventory({
-                  id: ref.key,
-                  imageURL: downloadURL,
-                  ...inventoryItem
-                })
-              );
-            });
-          
+    if (image) {
+      storage
+        .ref()
+        .child("images/" + image.name)
+        .put(image)
+        .then(snapshot => {
+          snapshot.ref.getDownloadURL().then(downloadURL => {
+            database
+              .ref("inventory")
+              .push({ ...inventoryItem, imageURL: downloadURL })
+              .then(ref => {
+                dispatch(
+                  addInventory({
+                    id: ref.key,
+                    imageURL: downloadURL,
+                    ...inventoryItem
+                  })
+                );
+              });
+          });
         });
-      })
+    } else {
+      const defaultImg = 'https://www.simplycoatings.co.uk/ekmps/shops/simplycoatings2/images/yester-30-matt-powder-coating-20kg-box--1655-p.jpg'
+      database
+        .ref("inventory")
+        .push({ ...inventoryItem, imageURL: defaultImg})
+        .then(ref => {
+          dispatch(
+            addInventory({
+              id: ref.key,
+              imageURL: defaultImg,
+              ...inventoryItem
+            })
+          );
+        });
+    }
   };
 };
 
@@ -73,3 +88,26 @@ export const editInventory = (id, updates) => ({
   updates
 });
 
+// SET_INVENTORY
+export const setInventory = (inventory) => ({
+  type: "SET_INVENTORY",
+  inventory
+})
+
+// START_SET_INVENTORY
+export const startSetInventory = () => {
+  return (dispatch) => {
+    return database.ref('inventory').once('value').then(function (snapshot) {
+      const inventory = []
+      snapshot.forEach((childSnapshot) => {
+        inventory.push({
+          id: childSnapshot.key,
+          ...childSnapshot.val()
+        })
+      })
+      // console.log(inventory)
+      dispatch(setInventory(inventory))
+    });
+
+  }
+}

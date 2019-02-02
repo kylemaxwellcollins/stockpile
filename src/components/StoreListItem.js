@@ -11,7 +11,6 @@ const StoreListItem = ({
   <div>
     <h3>{title}</h3>
     <img src={imageURL} alt={description} />
-    <p>{description}</p>
     {(sizes.small || sizes.medium || sizes.large || sizes.extraLarge) > 0 || (
       <p>In stock: {quantity}</p>
     )}

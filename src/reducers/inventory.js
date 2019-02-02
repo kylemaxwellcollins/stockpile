@@ -14,8 +14,8 @@ const inventoryReducer = (state = inventoryReducerDefaultState, action) => {
           return inventoryItem;
         }
       });
-      case "ADD_IMAGE":
-        return [...state, action.imageURL]
+      case "SET_INVENTORY":
+        return action.inventory
     default:
       return state;
   }
