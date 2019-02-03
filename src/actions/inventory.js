@@ -45,12 +45,17 @@ export const startAddInventory = (inventoryData = {}) => {
           snapshot.ref.getDownloadURL().then(downloadURL => {
             database
               .ref("inventory")
-              .push({ ...inventoryItem, imageURL: downloadURL })
+              .push({
+                ...inventoryItem,
+                imageURL: downloadURL,
+                imageName: image.name
+              })
               .then(ref => {
                 dispatch(
                   addInventory({
                     id: ref.key,
                     imageURL: downloadURL,
+                    imageName: image.name,
                     ...inventoryItem
                   })
                 );
@@ -58,10 +63,11 @@ export const startAddInventory = (inventoryData = {}) => {
           });
         });
     } else {
-      const defaultImg = 'https://www.simplycoatings.co.uk/ekmps/shops/simplycoatings2/images/yester-30-matt-powder-coating-20kg-box--1655-p.jpg'
+      const defaultImg =
+        "https://www.simplycoatings.co.uk/ekmps/shops/simplycoatings2/images/yester-30-matt-powder-coating-20kg-box--1655-p.jpg";
       database
         .ref("inventory")
-        .push({ ...inventoryItem, imageURL: defaultImg})
+        .push({ ...inventoryItem, imageURL: defaultImg })
         .then(ref => {
           dispatch(
             addInventory({
@@ -81,6 +87,24 @@ export const removeInventory = ({ id } = {}) => ({
   id
 });
 
+// START_REMOVE_INVENTORY
+export const startRemoveInventory = ({ id } = {}, { imageName } = {}) => {
+  return dispatch => {
+    console.log(id, imageName);
+    return database
+      .ref("inventory/" + id)
+      .remove()
+      .then(() => {
+        storage
+          .ref("images/" + imageName)
+          .delete()
+          .then(() => {
+            dispatch(removeInventory({ id }));
+          });
+      });
+  };
+};
+
 // EDIT_INVENTORY
 export const editInventory = (id, updates) => ({
   type: "EDIT_INVENTORY",
@@ -89,25 +113,26 @@ export const editInventory = (id, updates) => ({
 });
 
 // SET_INVENTORY
-export const setInventory = (inventory) => ({
+export const setInventory = inventory => ({
   type: "SET_INVENTORY",
   inventory
-})
+});
 
 // START_SET_INVENTORY
 export const startSetInventory = () => {
-  return (dispatch) => {
-    return database.ref('inventory').once('value').then(function (snapshot) {
-      const inventory = []
-      snapshot.forEach((childSnapshot) => {
-        inventory.push({
-          id: childSnapshot.key,
-          ...childSnapshot.val()
-        })
-      })
-      // console.log(inventory)
-      dispatch(setInventory(inventory))
-    });
-
-  }
-}
+  return dispatch => {
+    return database
+      .ref("inventory")
+      .once("value")
+      .then(function(snapshot) {
+        const inventory = [];
+        snapshot.forEach(childSnapshot => {
+          inventory.push({
+            id: childSnapshot.key,
+            ...childSnapshot.val()
+          });
+        });
+        dispatch(setInventory(inventory));
+      });
+  };
+};

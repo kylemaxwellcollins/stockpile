@@ -1,5 +1,5 @@
 import React from "react";
-import { removeInventory, editInventory } from "../actions/inventory";
+import { startRemoveInventory, editInventory } from "../actions/inventory";
 import { connect } from "react-redux";
 import InventoryItemForm from "../components/InventoryItemForm";
 
@@ -15,7 +15,7 @@ const EditInventoryPage = props => {
       />
       <button
         onClick={() => {
-          props.dispatch(removeInventory({ id: props.match.params.id }));
+          props.dispatch(startRemoveInventory({ id: props.match.params.id }, props.inventoryItem));
           props.history.push("/inventory");
         }}
       >
