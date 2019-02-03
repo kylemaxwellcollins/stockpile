@@ -1,5 +1,5 @@
 import React from "react";
-import { startRemoveInventory, editInventory } from "../actions/inventory";
+import { startRemoveInventory, startEditInventory } from "../actions/inventory";
 import { connect } from "react-redux";
 import InventoryItemForm from "../components/InventoryItemForm";
 
@@ -9,7 +9,7 @@ const EditInventoryPage = props => {
       <InventoryItemForm
         inventoryItem={props.inventoryItem}
         onSubmit={inventoryItem => {
-          props.dispatch(editInventory(props.inventoryItem.id, inventoryItem));
+          props.dispatch(startEditInventory(props.inventoryItem.id, inventoryItem));
           props.history.push("/inventory");
         }}
       />

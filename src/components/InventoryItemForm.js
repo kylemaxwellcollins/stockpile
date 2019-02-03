@@ -34,6 +34,7 @@ export default class InventoryItemForm extends Component {
         : moment(),
       error: ""
     };
+    console.log(props.inventoryItem)
   }
 
   onTextChange = e => {
@@ -233,7 +234,7 @@ export default class InventoryItemForm extends Component {
             onChange={onFileChange}
             accept="image/*"
           />
-          <button>{this.props.inventoryItem ? "Make Changes" : "Add"}</button>
+          <button>{this.props.inventoryItem ? "Save" : "Add"}</button>
         </form>
       </div>
     );

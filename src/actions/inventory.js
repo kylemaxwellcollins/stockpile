@@ -15,7 +15,6 @@ export const startAddInventory = (inventoryData = {}) => {
       price = 0,
       createdAt = 0,
       image = null,
-      // imageURL = "",
       quantity = 0,
       sizes = {
         small: "",
@@ -31,7 +30,6 @@ export const startAddInventory = (inventoryData = {}) => {
       price,
       createdAt,
       image,
-      // imageURL,
       quantity,
       sizes
     };
@@ -111,6 +109,15 @@ export const editInventory = (id, updates) => ({
   id,
   updates
 });
+
+//START_EDIT_INVENTORY
+export const startEditInventory = (id, updates) => {
+return (dispatch) => {
+  return database.ref('inventory/' + id).update(updates).then(() => {
+    dispatch(editInventory(id, updates))
+  })
+}
+}
 
 // SET_INVENTORY
 export const setInventory = inventory => ({
