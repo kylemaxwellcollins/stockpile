@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "../components/Header";
 import InventoryPage from "../components/InventoryPage";
@@ -11,18 +11,20 @@ import RecordsPage from "../components/RecordsPage";
 
 const AppRouter = () => (
   <Router>
-    <div>
+    <Fragment>
       <Header />
-      <Switch>
-        <Route path="/" exact component={StorePage} />
-        <Route path="/inventory" component={InventoryPage} />
-        <Route path="/create" component={AddInventoryItem} />
-        <Route path="/edit/:id" component={EditInventoryPage} />
-        <Route path="/report" component={ReportPage} />
-        <Route path="/records" component={RecordsPage} />
-        <Route component={NotFoundPage} />
-      </Switch>
-    </div>
+      <div className="wrapper">
+        <Switch>
+          <Route path="/" exact component={StorePage} />
+          <Route path="/inventory" component={InventoryPage} />
+          <Route path="/create" component={AddInventoryItem} />
+          <Route path="/edit/:id" component={EditInventoryPage} />
+          <Route path="/report" component={ReportPage} />
+          <Route path="/records" component={RecordsPage} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </div>
+    </Fragment>
   </Router>
 );
 

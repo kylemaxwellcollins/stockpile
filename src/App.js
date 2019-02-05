@@ -1,7 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import AppRouter from "./routers/AppRouter";
-import "./App.css";
+import "./styles/App.scss";
 import configureStore from "./store/configureStore";
 import { startSetInventory } from "./actions/inventory";
 

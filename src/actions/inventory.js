@@ -65,6 +65,7 @@ export const startAddInventory = (inventoryData = {}) => {
         "https://www.simplycoatings.co.uk/ekmps/shops/simplycoatings2/images/yester-30-matt-powder-coating-20kg-box--1655-p.jpg";
       database
         .ref("inventory")
+        // todo don't send unnecessary image to storage, imageURL || 'defaultImg'
         .push({ ...inventoryItem, imageURL: defaultImg })
         .then(ref => {
           dispatch(

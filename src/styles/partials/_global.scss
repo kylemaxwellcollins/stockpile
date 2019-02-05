@@ -1,0 +1,36 @@
+$black-shade: #2f2f2f;
+$white-shade: #f1f1f1;
+$darkGrey: #6c6c6c;
+$grey: #9a9191;
+$lightGrey: #ebebeb;
+$accent: #e5a01e;
+
+@mixin primaryFont($size, $color) {
+  font-family: "Montserrat", Sans-Serif;
+  color: $color;
+  // font-size: $size * 1px;
+  font-size: ($size / 10) * 1rem;
+  text-transform: uppercase;
+}
+
+@mixin secondaryFont($size, $color) {
+  font-family: "Roboto", Sans-Serif;
+  color: $color;
+  // font-size: $size * 1px;
+  font-size: ($size / 10) * 1rem;
+  line-height: 32px;
+}
+
+// html {
+//   font-size: 62.5%;
+// }
+
+.wrapper {
+  max-width: 1140px;
+  width: 95%;
+  margin: 0 auto;
+}
+
+p {
+  @include secondaryFont(16, $black-shade);
+}
