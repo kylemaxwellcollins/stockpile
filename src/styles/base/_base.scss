@@ -1,0 +1,16 @@
+html {
+  font-size: 62.5%;
+}
+
+p {
+  @include secondaryFont(16, black);
+}
+
+h3 {
+  @include secondaryFont(25, black);
+}
+.wrapper {
+  max-width: 1140px;
+  width: 95%;
+  margin: 0 auto;
+}

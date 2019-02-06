@@ -1,0 +1,20 @@
+.header {
+  background: $accent;
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 8vh;
+  }
+  &__nav {
+    &__link {
+      @include secondaryFont(16, white);
+      text-decoration: none;
+      padding: 20px 0 20px 0;
+      margin-left: 20px;
+    }
+    .is-active {
+      text-decoration: underline;
+    }
+  }
+}

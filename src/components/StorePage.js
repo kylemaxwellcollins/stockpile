@@ -6,7 +6,7 @@ import InventoryFilters from '../components/InventoryFilters'
 const StorePage = () => {
   return (
     <div>
-      <h2>Store</h2>
+      {/* <h2>Store</h2> */}
       <InventoryFilters />
       <StoreList />
     </div>
