@@ -10,13 +10,13 @@ const EditInventoryPage = props => {
         inventoryItem={props.inventoryItem}
         onSubmit={inventoryItem => {
           props.dispatch(startEditInventory(props.inventoryItem.id, inventoryItem));
-          props.history.push("/inventory");
+          props.history.push("/");
         }}
       />
       <button
         onClick={() => {
           props.dispatch(startRemoveInventory({ id: props.match.params.id }, props.inventoryItem));
-          props.history.push("/inventory");
+          props.history.push("/");
         }}
       >
         Remove

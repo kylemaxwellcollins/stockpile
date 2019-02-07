@@ -4,6 +4,7 @@ import StoreListItem from "../components/StoreListItem";
 import getVisibleInventory from "../selectors/inventory";
 
 const StoreList = props => {
+  
   return (
     <div>
       {props.inventoryItems.map(inventoryItem => (
